@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pong-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pong-server
+  template:
+    metadata:
+      labels:
+        app: pong-server
+    spec:
+      containers:
+      - name: pong-server
+        image:  ghcr.io/s1ntaxe770r/pong:e0fb83f27536836d1420cffd0724360a7a650c13
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pong-server-service
+spec:
+  selector:
+    app: pong-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+
